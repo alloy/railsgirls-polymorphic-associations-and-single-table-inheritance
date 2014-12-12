@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :music_events
+
   resources :sport_events
 
   # The priority is based upon order of creation: first created -> highest priority.

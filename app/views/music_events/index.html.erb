@@ -1,0 +1,31 @@
+<h1>Listing music_events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Ticket price</th>
+      <th>Band</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @music_events.each do |music_event| %>
+      <tr>
+        <td><%= music_event.starts_at %></td>
+        <td><%= music_event.ends_at %></td>
+        <td><%= music_event.ticket_price %></td>
+        <td><%= music_event.band %></td>
+        <td><%= link_to 'Show', music_event %></td>
+        <td><%= link_to 'Edit', edit_music_event_path(music_event) %></td>
+        <td><%= link_to 'Destroy', music_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Music event', new_music_event_path %>

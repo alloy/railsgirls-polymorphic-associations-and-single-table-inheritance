@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  starts_at: 2014-12-12 21:14:54
+  ends_at: 2014-12-12 21:14:54
+  ticket_price: 1
+  band: MyString
+
+two:
+  starts_at: 2014-12-12 21:14:54
+  ends_at: 2014-12-12 21:14:54
+  ticket_price: 1
+  band: MyString
