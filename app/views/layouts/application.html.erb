@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RailsgirlsPolymorphicAssociationsAndSingleTableInheritance</title>
+  <title>Tickets for all your favorite events!</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<div>
+  <%= link_to 'Sport Events', sport_events_path %>
+  <%= link_to 'Music Events', music_events_path %>
+  <%= link_to 'Invoices', invoices_path %>
+</div>
 
 <%= yield %>
 
