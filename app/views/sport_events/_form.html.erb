@@ -1,0 +1,37 @@
+<%= form_for(@sport_event) do |f| %>
+  <% if @sport_event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sport_event.errors.count, "error") %> prohibited this sport_event from being saved:</h2>
+
+      <ul>
+      <% @sport_event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :starts_at %><br>
+    <%= f.datetime_select :starts_at %>
+  </div>
+  <div class="field">
+    <%= f.label :ends_at %><br>
+    <%= f.datetime_select :ends_at %>
+  </div>
+  <div class="field">
+    <%= f.label :ticket_price %><br>
+    <%= f.number_field :ticket_price %>
+  </div>
+  <div class="field">
+    <%= f.label :home_team %><br>
+    <%= f.text_field :home_team %>
+  </div>
+  <div class="field">
+    <%= f.label :away_team %><br>
+    <%= f.text_field :away_team %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,33 @@
+<h1>Listing sport_events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th>Ticket price</th>
+      <th>Home team</th>
+      <th>Away team</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sport_events.each do |sport_event| %>
+      <tr>
+        <td><%= sport_event.starts_at %></td>
+        <td><%= sport_event.ends_at %></td>
+        <td><%= sport_event.ticket_price %></td>
+        <td><%= sport_event.home_team %></td>
+        <td><%= sport_event.away_team %></td>
+        <td><%= link_to 'Show', sport_event %></td>
+        <td><%= link_to 'Edit', edit_sport_event_path(sport_event) %></td>
+        <td><%= link_to 'Destroy', sport_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sport event', new_sport_event_path %>
