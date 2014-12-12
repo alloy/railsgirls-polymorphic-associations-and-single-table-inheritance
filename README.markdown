@@ -6,9 +6,9 @@ $ cd railsgirls-event-tickets
 ```
 
 ```
-$ rails generate scaffold sport_event starts_at:datetime ends_at:datetime ticket_price:integer home_team:string away_team:string
-$ rails generate scaffold music_event starts_at:datetime ends_at:datetime ticket_price:integer band:string
-$ rails generate scaffold invoice customer:string
+$ bundle exec rails generate scaffold sport_event starts_at:datetime ends_at:datetime ticket_price:integer home_team:string away_team:string
+$ bundle exec rails generate scaffold music_event starts_at:datetime ends_at:datetime ticket_price:integer band:string
+$ bundle exec rails generate scaffold invoice customer:string
 ```
 
 ### Change root route to point to something:
@@ -59,3 +59,17 @@ $ bundle exec rails server
 ```
 
 Open web browser at http://0.0.0.0:3000.
+
+# Add various sports models through Single-Table Inheritance
+
+```
+$ bundle exec rails generate migration AddTypeToSportEvent type:string
+$ bundle exec rake db:migrate
+```
+
+Add model files for soccer and basketball events:
+
+```
+$ echo -e "class SoccerEvent < SportEvent\nend" > app/models/soccer_event.rb
+$ echo -e "class BasketballEvent < SportEvent\nend" > app/models/basketball_event.rb
+```

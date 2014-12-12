@@ -1,0 +1,2 @@
+class BasketballEvent < SportEvent
+end

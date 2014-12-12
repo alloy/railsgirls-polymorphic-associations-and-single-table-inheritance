@@ -1,0 +1,2 @@
+class SoccerEvent < SportEvent
+end

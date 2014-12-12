@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212201713) do
+ActiveRecord::Schema.define(version: 20141212205238) do
 
   create_table "invoices", force: true do |t|
     t.string   "customer"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20141212201713) do
     t.string   "away_team"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
 end
