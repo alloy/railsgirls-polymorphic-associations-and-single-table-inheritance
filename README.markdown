@@ -82,44 +82,6 @@ need to be made explicit.
 
 ----
 
-### `app/controllers/sport_events_controller.rb`
-
-```diff
-@@ -28,7 +28,7 @@ class SportEventsController < ApplicationController
- 
-     respond_to do |format|
-       if @sport_event.save
--        format.html { redirect_to @sport_event, notice: 'Sport event was successfully created.' }
-+        format.html { redirect_to sport_event_url(@sport_event), notice: 'Sport event was successfully created.' }
-         format.json { render :show, status: :created, location: @sport_event }
-       else
-         format.html { render :new }
-@@ -42,7 +42,7 @@ class SportEventsController < ApplicationController
-   def update
-     respond_to do |format|
-       if @sport_event.update(sport_event_params)
--        format.html { redirect_to @sport_event, notice: 'Sport event was successfully updated.' }
-+        format.html { redirect_to sport_event_url(@sport_event), notice: 'Sport event was successfully updated.' }
-         format.json { render :show, status: :ok, location: @sport_event }
-       else
-         format.html { render :edit }
-```
-
-----
-
-### `app/views/sport_events/_form.html.erb`
-
-```diff
-@@ -1,4 +1,4 @@
--<%= form_for(@sport_event) do |f| %>
-+<%= form_for(@sport_event, :url => (@sport_event.new_record? ? sport_events_url : sport_event_url(@sport_event) )) do |f| %>
-   <% if @sport_event.errors.any? %>
-     <div id="error_explanation">
-       <h2><%= pluralize(@sport_event.errors.count, "error") %> prohibited this sport_event from being saved:</h2>
-```
-
-----
-
 ### `app/views/sport_events/edit.html.erb`
 
 ```diff
@@ -153,6 +115,44 @@ need to be made explicit.
 
 ----
 
+### `app/views/sport_events/_form.html.erb`
+
+```diff
+@@ -1,4 +1,4 @@
+-<%= form_for(@sport_event) do |f| %>
++<%= form_for(@sport_event, :url => (@sport_event.new_record? ? sport_events_url : sport_event_url(@sport_event) )) do |f| %>
+   <% if @sport_event.errors.any? %>
+     <div id="error_explanation">
+       <h2><%= pluralize(@sport_event.errors.count, "error") %> prohibited this sport_event from being saved:</h2>
+```
+
+----
+
+### `app/controllers/sport_events_controller.rb`
+
+```diff
+@@ -28,7 +28,7 @@ class SportEventsController < ApplicationController
+ 
+     respond_to do |format|
+       if @sport_event.save
+-        format.html { redirect_to @sport_event, notice: 'Sport event was successfully created.' }
++        format.html { redirect_to sport_event_url(@sport_event), notice: 'Sport event was successfully created.' }
+         format.json { render :show, status: :created, location: @sport_event }
+       else
+         format.html { render :new }
+@@ -42,7 +42,7 @@ class SportEventsController < ApplicationController
+   def update
+     respond_to do |format|
+       if @sport_event.update(sport_event_params)
+-        format.html { redirect_to @sport_event, notice: 'Sport event was successfully updated.' }
++        format.html { redirect_to sport_event_url(@sport_event), notice: 'Sport event was successfully updated.' }
+         format.json { render :show, status: :ok, location: @sport_event }
+       else
+         format.html { render :edit }
+```
+
+----
+
 ## Make creating and editing soccer and basketball events work.
 
 Now that we all the views are usable again, it’s time to make sure that the right type of sport
@@ -160,6 +160,20 @@ event is created and edited.
 
 The important thing to note here is that instead of using the `SportEvent` class, the application
 should now use the subclass for the specific sport event type that is being worked on.
+
+----
+
+### `app/views/sport_events/index.html.erb`
+
+```diff
+@@ -30,4 +30,5 @@
+ 
+ <br>
+ 
+-<%= link_to 'New Sport event', new_sport_event_path %>
++<%= link_to 'New soccer event', new_sport_event_path(:sport_event => { :type => 'SoccerEvent' }) %>
++<%= link_to 'New basketball event', new_sport_event_path(:sport_event => { :type => 'BasketballEvent' }) %>
+```
 
 ----
 
@@ -225,17 +239,4 @@ should now use the subclass for the specific sport event type that is being work
 
 ----
 
-### `app/views/sport_events/index.html.erb`
-
-```diff
-@@ -30,4 +30,5 @@
- 
- <br>
- 
--<%= link_to 'New Sport event', new_sport_event_path %>
-+<%= link_to 'New soccer event', new_sport_event_path(:sport_event => { :type => 'SoccerEvent' }) %>
-+<%= link_to 'New basketball event', new_sport_event_path(:sport_event => { :type => 'BasketballEvent' }) %>
-```
-
-----
 
