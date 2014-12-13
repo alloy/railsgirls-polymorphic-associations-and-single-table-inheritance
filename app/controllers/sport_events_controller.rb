@@ -28,7 +28,7 @@ class SportEventsController < ApplicationController
 
     respond_to do |format|
       if @sport_event.save
-        format.html { redirect_to @sport_event, notice: 'Sport event was successfully created.' }
+        format.html { redirect_to sport_event_url(@sport_event), notice: 'Sport event was successfully created.' }
         format.json { render :show, status: :created, location: @sport_event }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class SportEventsController < ApplicationController
   def update
     respond_to do |format|
       if @sport_event.update(sport_event_params)
-        format.html { redirect_to @sport_event, notice: 'Sport event was successfully updated.' }
+        format.html { redirect_to sport_event_url(@sport_event), notice: 'Sport event was successfully updated.' }
         format.json { render :show, status: :ok, location: @sport_event }
       else
         format.html { render :edit }

@@ -20,9 +20,9 @@
         <td><%= sport_event.ticket_price %></td>
         <td><%= sport_event.home_team %></td>
         <td><%= sport_event.away_team %></td>
-        <td><%= link_to 'Show', sport_event %></td>
+        <td><%= link_to 'Show', sport_event_path(sport_event) %></td>
         <td><%= link_to 'Edit', edit_sport_event_path(sport_event) %></td>
-        <td><%= link_to 'Destroy', sport_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', sport_event_path(sport_event), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

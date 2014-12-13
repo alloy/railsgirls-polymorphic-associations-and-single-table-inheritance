@@ -1,4 +1,4 @@
-<%= form_for(@sport_event) do |f| %>
+<%= form_for(@sport_event, :url => (@sport_event.new_record? ? sport_events_url : sport_event_url(@sport_event) )) do |f| %>
   <% if @sport_event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@sport_event.errors.count, "error") %> prohibited this sport_event from being saved:</h2>
