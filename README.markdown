@@ -308,3 +308,116 @@ clarifying what type of sport event a given event is.
 
 ----
 
+## Add soccer and basketball teams and show in selection popups.
+
+Up to now, this exercise has mainly been an academic one. Besides differentiating between the types
+of sport events and showing that type in the interface, the use of STI has not really done much more
+for us, and has, arguably, only lead to more complex code. But now it’s time to change that.
+
+The nice thing about STI, like with any subclasses in an object-oriented programming language, is
+that you can have them implement the same API (a collection of methods), but have their results be
+customized for that subclass’ needs.
+
+In the case of soccer and basketball sport events, they both have the concept of teams, but both
+with their own unique sets. Let’s add those teams to their respective subclasses and show them in
+the interface.
+
+----
+
+### `app/models/basketball_event.rb`
+
+```diff
+@@ -1,2 +1,36 @@
+ class BasketballEvent < SportEvent
++  def self.teams
++    [
++      "Atlanta Hawks",
++      "Boston Celtics",
++      "Brooklyn Nets",
++      "Charlotte Hornets",
++      "Chicago Bulls",
++      "Cleveland Cavaliers",
++      "Dallas Mavericks",
++      "Denver Nuggets",
++      "Detroit Pistons",
++      "Golden State Warriors",
++      "Houston Rockets",
++      "Indiana Pacers",
++      "Los Angeles Clippers",
++      "Los Angeles Lakers",
++      "Memphis Grizzlies",
++      "Miami Heat",
++      "Milwaukee Bucks",
++      "Minnesota Timberwolves",
++      "New Orleans Pelicans",
++      "New York Knicks",
++      "Oklahoma City Thunder",
++      "Orlando Magic",
++      "Philadelphia 76ers",
++      "Phoenix Suns",
++      "Portland Trail Blazers",
++      "Sacramento Kings",
++      "San Antonio Spurs",
++      "Toronto Raptors",
++      "Utah Jazz",
++      "Washington Wizards"
++    ]
++  end
+ end
+```
+
+----
+
+### `app/models/soccer_event.rb`
+
+```diff
+@@ -1,2 +1,24 @@
+ class SoccerEvent < SportEvent
++  def self.teams
++    [
++      "ADO Den Haag",
++      "AZ",
++      "Ajax",
++      "Excelsior",
++      "FC Dordrecht",
++      "FC Groningen",
++      "FC Twente",
++      "FC Utrecht",
++      "Feyenoord",
++      "Go Ahead Eagles",
++      "Heracles Almelo",
++      "NAC Breda",
++      "PEC Zwolle",
++      "PSV",
++      "SC Cambuur",
++      "SC Heerenveen",
++      "Vitesse",
++      "Willem II"
++    ]
++  end
+ end
+```
+
+----
+
+### `app/views/sport_events/_form.html.erb`
+
+```diff
+@@ -27,11 +27,11 @@
+   </div>
+   <div class="field">
+     <%= f.label :home_team %><br>
+-    <%= f.text_field :home_team %>
++    <%= f.select :home_team, @sport_event.class.teams %>
+   </div>
+   <div class="field">
+     <%= f.label :away_team %><br>
+-    <%= f.text_field :away_team %>
++    <%= f.select :away_team, @sport_event.class.teams %>
+   </div>
+   <div class="actions">
+     <%= f.submit %>
+```
+
+----
+
