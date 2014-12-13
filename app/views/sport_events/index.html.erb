@@ -5,6 +5,7 @@
     <tr>
       <th>Starts at</th>
       <th>Ends at</th>
+      <th>Type</th>
       <th>Ticket price</th>
       <th>Home team</th>
       <th>Away team</th>
@@ -17,6 +18,7 @@
       <tr>
         <td><%= sport_event.starts_at %></td>
         <td><%= sport_event.ends_at %></td>
+        <td><%= sport_event.type.sub('Event', '') %></td>
         <td><%= sport_event.ticket_price %></td>
         <td><%= sport_event.home_team %></td>
         <td><%= sport_event.away_team %></td>
