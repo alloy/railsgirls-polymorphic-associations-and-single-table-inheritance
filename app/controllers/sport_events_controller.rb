@@ -14,7 +14,7 @@ class SportEventsController < ApplicationController
 
   # GET /sport_events/new
   def new
-    @sport_event = SportEvent.new
+    @sport_event = sport_event_class.new
   end
 
   # GET /sport_events/1/edit
@@ -24,7 +24,7 @@ class SportEventsController < ApplicationController
   # POST /sport_events
   # POST /sport_events.json
   def create
-    @sport_event = SportEvent.new(sport_event_params)
+    @sport_event = sport_event_class.new(sport_event_params)
 
     respond_to do |format|
       if @sport_event.save
@@ -62,6 +62,14 @@ class SportEventsController < ApplicationController
   end
 
   private
+    # Use the appropriate SportEvent subclass.
+    #
+    # String#constantize turns a string like `SoccerEvent` into a class of the same name, if it exists.
+    #
+    def sport_event_class
+      params[:sport_event][:type].constantize
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_sport_event
       @sport_event = SportEvent.find(params[:id])

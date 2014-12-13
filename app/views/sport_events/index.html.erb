@@ -30,4 +30,5 @@
 
 <br>
 
-<%= link_to 'New Sport event', new_sport_event_path %>
+<%= link_to 'New soccer event', new_sport_event_path(:sport_event => { :type => 'SoccerEvent' }) %>
+<%= link_to 'New basketball event', new_sport_event_path(:sport_event => { :type => 'BasketballEvent' }) %>
