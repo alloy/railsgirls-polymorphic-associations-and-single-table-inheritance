@@ -1,52 +1,19 @@
-# Generate base application
+# RailsGirls: Polymorphic Associations and Single-Table Inheritance
+
+This repository contains the base application for the similarly named
+[RailsGirls event](http://www.meetup.com/RailsGirls-NL/events/197905392/).
+
+# Prerequisite
+
+* Ruby 2 installed. The latest version is 2.1.5, but any 2.x.x version will do.
+* Ruby sqlite3 gem installed.
+* Ruby bundler gem installed.
+
+# Installation
 
 ```
-$ rails new railsgirls-event-tickets
-$ cd railsgirls-event-tickets
-```
-
-```
-$ rails generate scaffold sport_event starts_at:datetime ends_at:datetime ticket_price:integer home_team:string away_team:string
-$ rails generate scaffold music_event starts_at:datetime ends_at:datetime ticket_price:integer band:string
-$ rails generate scaffold invoice customer:string
-```
-
-### Change root route to point to something:
-
-```
-$ edit config/routes.rb
-```
-
-```ruby
-Rails.application.routes.draw do
-  resources :invoices
-  resources :music_events
-  resources :sport_events
-
-  root 'sport_events#index'
-end
-```
-
-### Change view layout to add links to all sections
-
-```
-$ edit app/views/layouts/application.html.erb
-```
-
-```erb
-<div>
-  <%= link_to 'Sport Events', sport_events_path %>
-  <%= link_to 'Music Events', music_events_path %>
-  <%= link_to 'Invoices', invoices_path %>
-</div>
-```
-
-# Setup
-
-Change into project directory, if you have not done so already:
-
-```
-$ cd railsgirls-event-tickets
+$ git clone https://github.com/alloy/railsgirls-polymorphic-associations-and-single-table-inheritance.git
+$ cd railsgirls-polymorphic-associations-and-single-table-inheritance
 ```
 
 ```
@@ -59,3 +26,4 @@ $ bundle exec rails server
 ```
 
 Open web browser at http://0.0.0.0:3000.
+
