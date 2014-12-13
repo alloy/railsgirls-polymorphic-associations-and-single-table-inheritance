@@ -27,11 +27,11 @@
   </div>
   <div class="field">
     <%= f.label :home_team %><br>
-    <%= f.text_field :home_team %>
+    <%= f.select :home_team, @sport_event.class.teams %>
   </div>
   <div class="field">
     <%= f.label :away_team %><br>
-    <%= f.text_field :away_team %>
+    <%= f.select :away_team, @sport_event.class.teams %>
   </div>
   <div class="actions">
     <%= f.submit %>
