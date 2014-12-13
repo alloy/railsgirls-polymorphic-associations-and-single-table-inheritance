@@ -239,4 +239,72 @@ should now use the subclass for the specific sport event type that is being work
 
 ----
 
+## Show sport event type to user in views.
+
+Now that the application is working functionally, it’s a good idea to improve the interface a bit by
+clarifying what type of sport event a given event is.
+
+----
+
+### `app/views/sport_events/index.html.erb`
+
+```diff
+@@ -5,6 +5,7 @@
+     <tr>
+       <th>Starts at</th>
+       <th>Ends at</th>
++      <th>Type</th>
+       <th>Ticket price</th>
+       <th>Home team</th>
+       <th>Away team</th>
+@@ -17,6 +18,7 @@
+       <tr>
+         <td><%= sport_event.starts_at %></td>
+         <td><%= sport_event.ends_at %></td>
++        <td><%= sport_event.type.sub('Event', '') %></td>
+         <td><%= sport_event.ticket_price %></td>
+         <td><%= sport_event.home_team %></td>
+         <td><%= sport_event.away_team %></td>
+```
+
+----
+
+### `app/views/sport_events/show.html.erb`
+
+```diff
+@@ -1,5 +1,7 @@
+ <p id="notice"><%= notice %></p>
+ 
++<h1><%= @sport_event.type.underscore.humanize %></h1>
++
+ <p>
+   <strong>Starts at:</strong>
+   <%= @sport_event.starts_at %>
+```
+
+----
+
+### `app/views/sport_events/new.html.erb`
+
+```diff
+@@ -1,4 +1,4 @@
+-<h1>New sport_event</h1>
++<h1>New <%= @sport_event.type.underscore.sub('_', ' ') %></h1>
+ 
+ <%= render 'form' %>
+```
+
+----
+
+### `app/views/sport_events/edit.html.erb`
+
+```diff
+@@ -1,4 +1,4 @@
+-<h1>Editing sport_event</h1>
++<h1>Editing <%= @sport_event.type.underscore.sub('_', ' ') %></h1>
+ 
+ <%= render 'form' %>
+```
+
+----
 
