@@ -150,3 +150,92 @@ need to be made explicit.
      <% end %>
    </tbody>
 ```
+
+----
+
+## Make creating and editing soccer and basketball events work.
+
+Now that we all the views are usable again, it’s time to make sure that the right type of sport
+event is created and edited.
+
+The important thing to note here is that instead of using the `SportEvent` class, the application
+should now use the subclass for the specific sport event type that is being worked on.
+
+----
+
+### `app/controllers/sport_events_controller.rb`
+
+```diff
+@@ -14,7 +14,7 @@ class SportEventsController < ApplicationController
+ 
+   # GET /sport_events/new
+   def new
+-    @sport_event = SportEvent.new
++    @sport_event = sport_event_class.new
+   end
+ 
+   # GET /sport_events/1/edit
+@@ -24,7 +24,7 @@ class SportEventsController < ApplicationController
+   # POST /sport_events
+   # POST /sport_events.json
+   def create
+-    @sport_event = SportEvent.new(sport_event_params)
++    @sport_event = sport_event_class.new(sport_event_params)
+ 
+     respond_to do |format|
+       if @sport_event.save
+@@ -62,6 +62,14 @@ class SportEventsController < ApplicationController
+   end
+ 
+   private
++    # Use the appropriate SportEvent subclass.
++    #
++    # String#constantize turns a string like `SoccerEvent` into a class of the same name, if it exists.
++    #
++    def sport_event_class
++      params[:sport_event][:type].constantize
++    end
++
+     # Use callbacks to share common setup or constraints between actions.
+     def set_sport_event
+       @sport_event = SportEvent.find(params[:id])
+```
+
+----
+
+### `app/views/sport_events/_form.html.erb`
+
+```diff
+@@ -1,4 +1,4 @@
+-<%= form_for(@sport_event, :url => (@sport_event.new_record? ? sport_events_url : sport_event_url(@sport_event) )) do |f| %>
++<%= form_for(@sport_event, :as => :sport_event, :url => (@sport_event.new_record? ? sport_events_url : sport_event_url(@sport_event) )) do |f| %>
+   <% if @sport_event.errors.any? %>
+     <div id="error_explanation">
+       <h2><%= pluralize(@sport_event.errors.count, "error") %> prohibited this sport_event from being saved:</h2>
+@@ -11,6 +11,8 @@
+     </div>
+   <% end %>
+ 
++  <%= f.hidden_field :type %>
++
+   <div class="field">
+     <%= f.label :starts_at %><br>
+     <%= f.datetime_select :starts_at %>
+```
+
+----
+
+### `app/views/sport_events/index.html.erb`
+
+```diff
+@@ -30,4 +30,5 @@
+ 
+ <br>
+ 
+-<%= link_to 'New Sport event', new_sport_event_path %>
++<%= link_to 'New soccer event', new_sport_event_path(:sport_event => { :type => 'SoccerEvent' }) %>
++<%= link_to 'New basketball event', new_sport_event_path(:sport_event => { :type => 'BasketballEvent' }) %>
+```
+
+----
+
