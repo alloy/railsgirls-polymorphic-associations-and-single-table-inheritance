@@ -60,14 +60,30 @@ $ bundle exec rails server
 
 Open web browser at http://0.0.0.0:3000.
 
+
+
 # Add various sports models through Single-Table Inheritance
+
+Single-table inheritance, also known as STI, is a technique that allows multiple models with similar
+data sets share the same database table. What’s more, is that these models can be subclasses of the
+main table model and thus have specialized behaviour.
+
+In the case of soccer and basketball sport events, they both have the concept of teams, but both
+with their own unique sets of teams.
+
+We’ll get back to this at the end of this exercise, but first let’s make the basics work.
+
+## Create the subclass models
+
+Add the `type` column to the `sport_events` table, which will hold the type of sport event for each
+row. Rails will automatically store the type based on the subclass being used.
 
 ```
 $ bundle exec rails generate migration AddTypeToSportEvent type:string
 $ bundle exec rake db:migrate
 ```
 
-Add model files for soccer and basketball events:
+Add model files for soccer and basketball events.
 
 ```
 $ echo -e "class SoccerEvent < SportEvent\nend" > app/models/soccer_event.rb
@@ -314,13 +330,7 @@ Up to now, this exercise has mainly been an academic one. Besides differentiatin
 of sport events and showing that type in the interface, the use of STI has not really done much more
 for us, and has, arguably, only lead to more complex code. But now it’s time to change that.
 
-The nice thing about STI, like with any subclasses in an object-oriented programming language, is
-that you can have them implement the same API (a collection of methods), but have their results be
-customized for that subclass’ needs.
-
-In the case of soccer and basketball sport events, they both have the concept of teams, but both
-with their own unique sets. Let’s add those teams to their respective subclasses and show them in
-the interface.
+Let’s add the sets of teams to their respective subclasses and show them in the interface.
 
 ----
 
