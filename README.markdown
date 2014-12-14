@@ -431,3 +431,48 @@ Let’s add the sets of teams to their respective subclasses and show them in th
 
 ----
 
+
+
+# Make sport and music events purchasable through a Polymorphic Association.
+
+To be able to purchase a ticket for either a sport or music event, the application will have to be
+able to associate the event to an invoice. A very simple example of how to achieve this would be:
+
+```ruby
+class Invoice < ActiveRecord::Base
+  belongs_to :sport_event
+  belongs_to :music_event
+end
+```
+
+_NOTE: It might seem counter-intuitive to define this as a `belongs_to` association, but the key
+point here is that, with a `belongs_to` association, the foreign key (the ID of the associated model
+record) is on this model._
+
+While this would work, and simplicity should never be underestimated, it does not scale well once
+you might start selling tickets for other types of events in the future.
+
+Essentially, an invoice should be able to associate to _any_ type of event. This is where
+polymorphic associations come into play.
+
+A polymorphic association is an association that is able to associate a model to any other type of
+model. To do this, the model will need to hold both ther foreign key to the associated model record
+_and_ its type.
+
+## Add the polymorphic association columns to the invoices table and configure the model.
+
+In this example, a polymorphic association is added with the abstract name `purchasable`, which will
+represent either a music, soccer, or basketball event.
+
+```
+$ bundle exec rails generate migration AddPurchasableColumnsToInvoice purchasable_type:string purchasable_id:integer
+$ bundle exec rake db:migrate
+```
+
+And the `app/models/invoice.rb` file is updated to look like:
+
+```ruby
+class Invoice < ActiveRecord::Base
+  belongs_to :purchasable, :polymorphic => true
+end
+```
