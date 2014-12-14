@@ -654,3 +654,12 @@ description of the event on the invoice and the price of a ticket.
 
 ----
 
+# Exercises left for the reader
+
+* Add associations from music and sport events to invoices so that you can keep track of the number
+  of tickets sold for an event and possibly add a maximum number of available tickets for an event.
+* Add proper REST routes. E.g.:
+  - `/soccer_events/new`
+  - `/basketball_events/42`
+  - `/basketball_events/42/invoices/new`
+
