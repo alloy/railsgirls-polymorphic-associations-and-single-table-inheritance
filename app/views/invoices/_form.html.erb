@@ -11,6 +11,9 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :purchasable_type %>
+  <%= f.hidden_field :purchasable_id %>
+
   <div class="field">
     <%= f.label :customer %><br>
     <%= f.text_field :customer %>

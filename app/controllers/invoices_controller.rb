@@ -14,7 +14,7 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/new
   def new
-    @invoice = Invoice.new
+    @invoice = Invoice.new(invoice_params)
   end
 
   # GET /invoices/1/edit
@@ -69,6 +69,6 @@ class InvoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:customer)
+      params.require(:invoice).permit(:customer, :purchasable_type, :purchasable_id)
     end
 end

@@ -476,3 +476,77 @@ class Invoice < ActiveRecord::Base
   belongs_to :purchasable, :polymorphic => true
 end
 ```
+
+## Create an invoice for a specific event
+
+To be able to buy a ticket for an event, add purchase links to the `show` pages of all events and
+associate the event to the invoice.
+
+----
+
+### `app/views/music_events/show.html.erb`
+
+```diff
+@@ -20,5 +20,6 @@
+   <%= @music_event.band %>
+ </p>
+ 
++<%= link_to 'Purchase ticket', new_invoice_path(:invoice => { :purchasable_type => 'MusicEvent', :purchasable_id => @music_event.id }) %> |
+ <%= link_to 'Edit', edit_music_event_path(@music_event) %> |
+ <%= link_to 'Back', music_events_path %>
+```
+
+----
+
+### `app/views/sport_events/show.html.erb`
+
+```diff
+@@ -27,5 +27,6 @@
+   <%= @sport_event.away_team %>
+ </p>
+ 
++<%= link_to 'Purchase ticket', new_invoice_path(:invoice => { :purchasable_type => @sport_event.type, :purchasable_id => @sport_event.id }) %> |
+ <%= link_to 'Edit', edit_sport_event_path(@sport_event) %> |
+ <%= link_to 'Back', sport_events_path %>
+```
+
+----
+
+### `app/views/invoices/_form.html.erb`
+
+```diff
+@@ -11,6 +11,9 @@
+     </div>
+   <% end %>
+ 
++  <%= f.hidden_field :purchasable_type %>
++  <%= f.hidden_field :purchasable_id %>
++
+   <div class="field">
+     <%= f.label :customer %><br>
+     <%= f.text_field :customer %>
+```
+
+----
+
+### `app/controllers/invoices_controller.rb`
+
+```diff
+@@ -14,7 +14,7 @@ class InvoicesController < ApplicationController
+ 
+   # GET /invoices/new
+   def new
+-    @invoice = Invoice.new
++    @invoice = Invoice.new(invoice_params)
+   end
+ 
+   # GET /invoices/1/edit
+@@ -69,6 +69,6 @@ class InvoicesController < ApplicationController
+ 
+     # Never trust parameters from the scary internet, only allow the white list through.
+     def invoice_params
+-      params.require(:invoice).permit(:customer)
++      params.require(:invoice).permit(:customer, :purchasable_type, :purchasable_id)
+     end
+ end
+```

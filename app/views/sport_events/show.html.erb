@@ -27,5 +27,6 @@
   <%= @sport_event.away_team %>
 </p>
 
+<%= link_to 'Purchase ticket', new_invoice_path(:invoice => { :purchasable_type => @sport_event.type, :purchasable_id => @sport_event.id }) %> |
 <%= link_to 'Edit', edit_sport_event_path(@sport_event) %> |
 <%= link_to 'Back', sport_events_path %>
