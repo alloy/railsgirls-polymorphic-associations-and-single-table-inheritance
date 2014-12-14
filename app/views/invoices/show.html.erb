@@ -1,6 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Event:</strong>
+  <%= @invoice.purchasable.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @invoice.purchasable.ticket_price %>
+</p>
+
+<p>
   <strong>Customer:</strong>
   <%= @invoice.customer %>
 </p>

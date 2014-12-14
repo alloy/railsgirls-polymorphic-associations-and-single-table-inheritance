@@ -550,3 +550,107 @@ associate the event to the invoice.
      end
  end
 ```
+
+----
+
+## Show the event that an invoice is for in the interface and the invoice price.
+
+It’s always nice to be able to see for what exactly you are paying or have paid, so let’s show a
+description of the event on the invoice and the price of a ticket.
+
+----
+
+### `app/models/music_event.rb`
+
+```diff
+@@ -1,2 +1,5 @@
+ class MusicEvent < ActiveRecord::Base
++  def description
++    "Music: #{band}"
++  end
+ end
+```
+
+----
+
+### `app/models/sport_event.rb`
+
+```diff
+@@ -1,2 +1,5 @@
+ class SportEvent < ActiveRecord::Base
++  def description
++    "#{type.sub('Event', '')}: #{home_team} vs #{away_team}"
++  end
+ end
+```
+
+----
+
+### `app/views/invoices/index.html.erb`
+
+```diff
+@@ -3,6 +3,7 @@
+ <table>
+   <thead>
+     <tr>
++      <th>Event</th>
+       <th>Customer</th>
+       <th colspan="3"></th>
+     </tr>
+@@ -11,6 +12,7 @@
+   <tbody>
+     <% @invoices.each do |invoice| %>
+       <tr>
++        <td><%= invoice.purchasable.description %>
+         <td><%= invoice.customer %></td>
+         <td><%= link_to 'Show', invoice %></td>
+         <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
+```
+
+----
+
+### `app/views/invoices/_form.html.erb`
+
+```diff
+@@ -1,3 +1,13 @@
++<p>
++  <strong>Event:</strong>
++  <%= @invoice.purchasable.description %>
++</p>
++
++<p>
++  <strong>Price:</strong>
++  <%= @invoice.purchasable.ticket_price %>
++</p>
++
+ <%= form_for(@invoice) do |f| %>
+   <% if @invoice.errors.any? %>
+     <div id="error_explanation">
+```
+
+----
+
+### `app/views/invoices/show.html.erb`
+
+```diff
+@@ -1,6 +1,16 @@
+ <p id="notice"><%= notice %></p>
+ 
+ <p>
++  <strong>Event:</strong>
++  <%= @invoice.purchasable.description %>
++</p>
++
++<p>
++  <strong>Price:</strong>
++  <%= @invoice.purchasable.ticket_price %>
++</p>
++
++<p>
+   <strong>Customer:</strong>
+   <%= @invoice.customer %>
+ </p>
+```
+
+----
+

@@ -1,3 +1,13 @@
+<p>
+  <strong>Event:</strong>
+  <%= @invoice.purchasable.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @invoice.purchasable.ticket_price %>
+</p>
+
 <%= form_for(@invoice) do |f| %>
   <% if @invoice.errors.any? %>
     <div id="error_explanation">
